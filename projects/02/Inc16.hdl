@@ -14,7 +14,9 @@ CHIP Inc16 {
 
     PARTS:
     Not(in=in[0],out=notin);
+
     Or(a=in[0],b=notin,out=one);
+    
     HalfAdder(a=in[0],b=one,sum=out[0],carry=carry1);
     
     HalfAdder(a=in[1],b=carry1,sum=out[1],carry=carry2);
