@@ -14,5 +14,84 @@ CHIP Mux16 {
     OUT out[16];
 
     PARTS:
-    // Put your code here:
+    Not(in=sel,out=notSel);
+
+    Or(a=a[0],b=sel,out=int01);
+    Or(a=b[0],b=notSel,out=int02);
+    And(a=int01,b=int02,out=out[0]);
+    
+
+    Or(a=a[1],b=sel,out=int11);
+    Or(a=b[1],b=notSel,out=int12);
+    And(a=int11,b=int12,out=out[1]);
+    
+
+    Or(a=a[2],b=sel,out=int21);
+    Or(a=b[2],b=notSel,out=int22);
+    And(a=int21,b=int22,out=out[2]);
+    
+
+    Or(a=a[3],b=sel,out=int31);
+    Or(a=b[3],b=notSel,out=int32);
+    And(a=int31,b=int32,out=out[3]);
+    
+
+    Or(a=a[4],b=sel,out=int41);
+    Or(a=b[4],b=notSel,out=int42);
+    And(a=int41,b=int42,out=out[4]);
+    
+
+    Or(a=a[5],b=sel,out=int51);
+    Or(a=b[5],b=notSel,out=int52);
+    And(a=int51,b=int52,out=out[5]);
+    
+
+    Or(a=a[6],b=sel,out=int61);
+    Or(a=b[6],b=notSel,out=int62);
+    And(a=int61,b=int62,out=out[6]);
+    
+
+    Or(a=a[7],b=sel,out=int71);
+    Or(a=b[7],b=notSel,out=int72);
+    And(a=int71,b=int72,out=out[7]);
+    
+
+    Or(a=a[8],b=sel,out=int81);
+    Or(a=b[8],b=notSel,out=int82);
+    And(a=int81,b=int82,out=out[8]);
+    
+
+    Or(a=a[9],b=sel,out=int91);
+    Or(a=b[9],b=notSel,out=int92);
+    And(a=int91,b=int92,out=out[9]);
+    
+
+    Or(a=a[10],b=sel,out=int101);
+    Or(a=b[10],b=notSel,out=int102);
+    And(a=int101,b=int102,out=out[10]);
+    
+
+    Or(a=a[11],b=sel,out=int111);
+    Or(a=b[11],b=notSel,out=int112);
+    And(a=int111,b=int112,out=out[11]);
+    
+
+    Or(a=a[12],b=sel,out=int121);
+    Or(a=b[12],b=notSel,out=int122);
+    And(a=int121,b=int122,out=out[12]);
+    
+
+    Or(a=a[13],b=sel,out=int131);
+    Or(a=b[13],b=notSel,out=int132);
+    And(a=int131,b=int132,out=out[13]);
+    
+
+    Or(a=a[14],b=sel,out=int141);
+    Or(a=b[14],b=notSel,out=int142);
+    And(a=int141,b=int142,out=out[14]);
+    
+
+    Or(a=a[15],b=sel,out=int151);
+    Or(a=b[15],b=notSel,out=int152);
+    And(a=int151,b=int152,out=out[15]);
 }
