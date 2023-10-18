@@ -42,6 +42,37 @@ CHIP ALU {
         ng; // 1 if (out < 0),  0 otherwise
 
     PARTS:
+    Nand16(a=x[16],b=x[16],out=zerox); //zx
+    
+    Mux(a=x[16],b=zerox,sel=zx,out=zeex); //zx
+    
+    Not16(in=zeex,out=notZX); //nx
+    
+    Mux16(a=zeex,b=notZX,sel=zx,out=znX); //nx
+
+    Nand16(a=y[16],b=y[16],out=zeroy); //zy
+
+    Mux16(a=y[16],b=zeroy,sel=zy,out=zeey); //zy
+
+    Not16(in=zeey,out=notZY); //ny
+
+    Mux16(a=zeey,b=notZY,sel=zy,out=znY); //ny
+
+    And16(a=znX,b=znY,out=andXY);
+
+    Add16(a=znX,b=znY,out=addXY);
+
+    Mux16(a=andXY,b=addXY,sel=f,out=outF);
+
     Not16
-   // Put you code here:
+
+
+    Nand16(a=y[16],b=y[16],out=zeroy); //zy
+    Mux(a=,b=y[16],sel=f,) //fvalue
+    no = Not(in=fvalue,out=out); //no
+
+    Mux(a=y,b=zeroy,sel=zy,out=zeex);
+
+    
+    
 }
