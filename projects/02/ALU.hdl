@@ -43,34 +43,77 @@ CHIP ALU {
 
     PARTS:
 
-    Not16(in=x,out=notx);
+    Not16(in=x,out=notx); // Input is x, output is not x
 
-    And16(a=x,b=notx,out=zerox); //zx
+    And16(a=x,b=notx,out=zerox); //Inputs are x and notx, hence output is always zero
     
-    Mux(a=x,b=zerox,sel=zx,out=zeex); //zx
+    Mux16(a=x,b=zerox,sel=zx,out=zeex); //Inputs are x and zerox, so if zx=0 then output is x, if zx=1 then output is x=0
     
-    Not16(in=zeex,out=notZX); //nx
+    Not16(in=zeex,out=notZX); //Input is x from zx chip, output is notx
     
-    Mux16(a=zeex,b=notZX,sel=zx,out=znX); //nx
+    Mux16(a=zeex,b=notZX,sel=nx,out=znX); //If nx=1, then output is notx. If nx=0, then output is zeex (aka the output from zx chip)
 
-    Not16(in=y,out=noty);
+    Not16(in=y,out=noty); // Input is y, output is not y
 
-    And16(a=y,b=noty,out=zeroy); //zy
+    And16(a=y,b=noty,out=zeroy); // And of y and noty will always be zero.
 
-    Mux16(a=y,b=zeroy,sel=zy,out=zeey); //zy
+    Mux16(a=y,b=zeroy,sel=zy,out=zeey); //If sel=zy=0, then output is y. If zy=1, then output is zeroy
 
-    Not16(in=zeey,out=notZY); //ny
+    Not16(in=zeey,out=notZY); //Input is zeey, output is notZY
 
-    Mux16(a=zeey,b=notZY,sel=zy,out=znY); //ny
+    Mux16(a=zeey,b=notZY,sel=ny,out=znY); //If sel=ny=0, then output is zeey. If ny=1, then output is not of y.
 
-    And16(a=znX,b=znY,out=andXY);
+    And16(a=znX,b=znY,out=andXY); // And of znX and znY - aka the output value when f=1
 
-    Add16(a=znX,b=znY,out=addXY);
+    Add16(a=znX,b=znY,out=addXY); // Add both znX and znY - aka the output value when f = 1
 
-    Mux16(a=andXY,b=addXY,sel=f,out=F);
+    Mux16(a=andXY,b=addXY,sel=f,out=Fout); // If f=0, then pick a & b, and if f=1, then pick a+b
 
-    Not16(in=F,out=notF);
+    Not16(in=Fout,out=notFout); //Input is Fout and output is notFout
 
-    Mux16(a=F,b=notF,sel=no,out=out[16])
+    Mux16(a=Fout,b=notFout,sel=no,out=F); //If sel=no=0, then output is Fout. If no=1, then output is notFout
+
+
+
+    And16(a=F,b=F,
+    out=ef,
+    out[0]=ef0,
+    out[1]=ef1,
+    out[2]=ef2,
+    out[3]=ef3,
+    out[4]=ef4,
+    out[5]=ef5,
+    out[6]=ef6,
+    out[7]=ef7,
+    out[8]=ef8,
+    out[9]=ef9,
+    out[10]=ef10,
+    out[11]=ef11,
+    out[12]=ef12,
+    out[13]=ef13,
+    out[14]=ef14,
+    out[15]=ef15);
+
+    Or(a=ef0,b=ef1,out=or1);
+    Or(a=or1,b=ef2,out=or2);
+    Or(a=or2,b=ef3,out=or3);
+    Or(a=or3,b=ef4,out=or4);
+    Or(a=or4,b=ef5,out=or5);
+    Or(a=or5,b=ef6,out=or6);
+    Or(a=or6,b=ef7,out=or7);
+    Or(a=or7,b=ef8,out=or8);
+    Or(a=or8,b=ef9,out=or9);
+    Or(a=or9,b=ef10,out=or10);
+    Or(a=or10,b=ef11,out=or11);
+    Or(a=or11,b=ef12,out=or12);
+    Or(a=or12,b=ef13,out=or13);
+    Or(a=or13,b=ef14,out=or14);
+    Or(a=or14,b=ef15,out=or15);
+    Not(in=or15,out=zr);
+
+    And16(a=F,b[0..15]=true,out[15]=ng,out[0..14]=drop);
+
+    And16(a=F,b=F,out=out);
+    // Or16(a=F,b[0..15]=false,out=out);
     
 }
