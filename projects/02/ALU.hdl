@@ -73,8 +73,6 @@ CHIP ALU {
 
     Mux16(a=Fout,b=notFout,sel=no,out=F); //If sel=no=0, then output is Fout. If no=1, then output is notFout
 
-
-
     And16(a=F,b=F,
     out=ef,
     out[0]=ef0,
