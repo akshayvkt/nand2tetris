@@ -16,5 +16,11 @@ CHIP PC {
     OUT out[16];
 
     PARTS:
-    // Put your code here:
+    Nand16(a=in,b=in,out=zero);
+    Mux16(a=zero,b=in,sel=reset,out=outreset);
+    Bit(in=in,load=load,out=outbit);
+    Add16(a=in,b=)
+    Mux4Way16(a=outreset,b=outbit,c=outadd,d=in,sel=,out=out);
+
+
 }
