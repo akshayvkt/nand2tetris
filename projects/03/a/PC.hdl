@@ -16,11 +16,13 @@ CHIP PC {
     OUT out[16];
 
     PARTS:
-    Nand16(a=in,b=in,out=zero);
-    Mux16(a=zero,b=in,sel=reset,out=outreset);
-    Bit(in=in,load=load,out=outbit);
-    Add16(a=in,b=)
-    Mux4Way16(a=outreset,b=outbit,c=outadd,d=in,sel=,out=out);
+
+    Inc16(in=feedin,out=addout);
+
+    Mux16(a=feedin,b=addout,sel=inc,out=incout); // INCREMENT gate
+    Mux16(a=incout,b=in,sel=load,out=loadout); // LOAD gate
+    Mux16(a=loadout,b=false,sel=reset,out=resetout); //RESET gate
+    Register(in=resetout,load=true,out=feedin,out=out);
 
 
 }
