@@ -19,23 +19,29 @@
 
 // Put your code here.
 
+@R0
+M = M
+
+@R1
+D = M
+
+@R2
+M = 0
+
 @i
 M = 1
-
-@mult 
-M = 0
 
 (LOOP)
     @i
     D = M
     @R1
-    D = M - D
+    D = D - M
     @END
     D; JGT // if M-D>0, then go to END 
 
     @R0
     D = M
-    @mult
+    @R2
     M = M + D // incrementing our value in mult by adding R1 to R0
     @i
     M = M + 1  // i = i + 1
@@ -43,17 +49,5 @@ M = 0
     0; JMP //Jump back to the beginning of the LOOP
 
     (END)
-        @mult
-        D = M
-        @R2
-        M  = D
         @END
         0; JMP //Infinite loop
-
-
-
-
-
-
-
-
