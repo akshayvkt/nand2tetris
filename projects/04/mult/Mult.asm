@@ -37,7 +37,7 @@ M = 1
     @R1
     D = D - M
     @END
-    D; JGT // if M-D>0, then go to END 
+    D; JGT // if M-D>0, then go to END (the register it currently is in - which is END because we just did @END above)
 
     @R0
     D = M
@@ -46,8 +46,8 @@ M = 1
     @i
     M = M + 1  // i = i + 1
     @LOOP
-    0; JMP //Jump back to the beginning of the LOOP
+    0; JMP // Jump back to the beginning of the LOOP (the register it currently is in - which is LOOP because we just did @LOOP above)
 
-    (END)
-        @END
-        0; JMP //Infinite loop
+(END)
+    @END
+    0; JMP //Infinite loop
