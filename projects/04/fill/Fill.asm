@@ -13,56 +13,69 @@
 
 // Put your code here.
 
+// we have 256 X 512 pixels, each word is 16 pixels, meaning we have 32 words in each row
+// 32x256 words is 8192 words in total. The positions 16384 to 24576 are reserved for the display memory map
+// The position 24576 is reserved for the keyboard memory map - this contains 16 bits as well.
 
-@R1
-M = 8192
+// For loop:
+// There are 8192 screen memory map positions. Start with the first row position, load -1 value to it. Then iterate over the entire row by increasing Screen value by 1
+// all the way until the screen value is 8191. Then end the loop
 
+
+// Check the input in the keyboard memory map aka RAM[25476].
+// If the input is anything but 0, then trigger the loop.
+
+// i = 0,
+// while i<8192:
+//     SCREEN[i] = -1;
+//     i = i + 1 
+
+// if M[keyboard] != 0:
+// M[SCREEN] = -1 for SCREEN in range(8192)
+// else:
+// M[SCREEN] = 0 for SCREEN in range(8192)
 
 @i
-M = 1
-
-
-(START)
-    @i
-    D = M 
-    @Screen
-    A = A + D
-    M = 0
-
-
-    @Keyboard
-    D = M
-    @LOOP
-    D; JGT //if the keyboard value is >0, then go back to the loop
-
-    @i 
-    M = M + 1
-
-    @R1
-    @START
-    D; JMP //if the keyboard value is zero, continue through the start loop
-
+M = 0
 
 
 (LOOP)
-    @Keyboard
+    @KBD 
+    D = M 
+    @ONES
+    D; JGT
+    @ZEROS
+    D; JEQ
+
+(ONES)
+    @i
     D = M
-    @START   // if Keyboard == 0, then jump back to Start, which loops through
-    D; JMP   // and assigns each element's memory to zero value
-    @i 
-    D = M
-    M = M + 1
-    @Screen
+    @8192
+    D = A - D
+    @END
+    D; JEQ
+    @SCREEN 
     A = A + D
     M = -1
-
-    @R1
-    D = M 
     @i
-    D = M - D 
-    @END
-    D; JMP 
+    M = M + 1
+    @LOOP
+    0; JMP
 
+(ZEROS)
+    @i
+    D = M
+    @8192
+    D = D - A
+    @END
+    D; JEQ
+    @SCREEN 
+    A = A + D
+    M = 0
+    @i
+    M = M + 1
+    @LOOP
+    0; JMP
 
 (END)
     @END
